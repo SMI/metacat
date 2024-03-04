@@ -1,0 +1,7 @@
+.DS_Store
+**egg**
+**cache**
+test/database/**
+**/logs/
+**/dicom_standard
+**/creds
