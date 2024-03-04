@@ -34,4 +34,4 @@ cd /home/metacat/metadata_studies/body_part_labelling
 python3 generate_stats.py -v 1 -o /tmp -l logs/
 # Start catalogue UI
 cd /home/metacat/catalogue_ui
-python3 app.py -e dev -l logs/
+python3 app.py -e dev

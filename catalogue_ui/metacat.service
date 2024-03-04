@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=root
-ExecStart=python3 /home/metacat/catalogue_ui/app.py -e prod -l /home/metacat/catalogue_ui/logs/
+ExecStart=python3 /home/metacat/catalogue_ui/app.py -e prod
 
 [Install]
 WantedBy=multi-user.target

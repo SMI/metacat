@@ -14,6 +14,8 @@ from flask_caching import Cache
 app = Flask(__name__)
 app.config.from_mapping({"CACHE_TYPE": "SimpleCache"})
 cache = Cache(app)
+log = flib.setup_logging("logs", "catalogue_ui", "debug")
+logging.getLogger(log)
 
 
 def argparser() -> argparse.Namespace:
@@ -33,10 +35,6 @@ def argparser() -> argparse.Namespace:
     parser.add_argument("--port", "-p",
                         help="Port number. Default to 5002",
                         type=int, required=False, default=5002)
-    parser.add_argument("--log", "-l",
-                        help=("Log directory path. Default to current"
-                              " directory."),
-                        type=str, required=False, default=".")
 
     return parser.parse_args()
 
@@ -169,10 +167,6 @@ def main(args: argparse.Namespace) -> None:
     env = args.env
     host = args.address
     port = args.port
-    log_path = args.log
-
-    log = flib.setup_logging(log_path, "catalogue_ui", "debug")
-    logging.getLogger(log)
 
     if env == "dev":
         app.run(host=host, port=port, debug=True)
