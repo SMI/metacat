@@ -28,8 +28,7 @@ services:
     command: sh -c "
       . /home/metacat/test/setup_env.sh &&
       . /home/metacat/test/populate_dbs.sh &&
-      . /home/metacat/test/init_catalogue.sh &&
-      . /home/metacat/test/start_frontend.sh"
+      . /home/metacat/test/init_catalogue.sh"
     links:
       - mariadb
     volumes:

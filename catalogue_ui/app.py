@@ -2,18 +2,43 @@
    Client-side processing decision based on: https://datatables.net/faqs/index#speed
 '''
 import logging
+import argparse
 import _modules.functionality as funct
-from collections import OrderedDict
 import modules.file_lib as flib
+from waitress import serve
 from flask import Flask, render_template
 from werkzeug.exceptions import abort
 from flask_caching import Cache
 
+
 app = Flask(__name__)
 app.config.from_mapping({"CACHE_TYPE": "SimpleCache"})
 cache = Cache(app)
-log = flib.setup_logging("logs", "smi_catalogue", "debug")
-logging.getLogger(log)
+
+
+def argparser() -> argparse.Namespace:
+    '''Terminal argument parser function.
+
+    Returns:
+        argparse.Namespace: Terminal arguments.
+    '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--env", "-e",
+                        help="Environment type: prod/dev",
+                        required=False, choices=["prod", "dev"],
+                        nargs="+", default="dev")
+    parser.add_argument("--address", "-a",
+                        help="Host address or name. Default to 0.0.0.0.",
+                        type=str, required=False, default="0.0.0.0")
+    parser.add_argument("--port", "-p",
+                        help="Port number. Default to 5002",
+                        type=int, required=False, default=5002)
+    parser.add_argument("--log", "-l",
+                        help=("Log directory path. Default to current"
+                              " directory."),
+                        type=str, required=False, default=".")
+
+    return parser.parse_args()
 
 
 @app.route('/')
@@ -133,3 +158,28 @@ def report() -> str:
 
     return render_template("report.html", tag_stats=tag_stats,
                            monthly_counts=monthly_counts)
+
+
+def main(args: argparse.Namespace) -> None:
+    '''Main function for running app.
+
+    Args:
+        args (argparse.Namespace): Carries terminal arguments from argparse().
+    '''
+    env = args.env
+    host = args.address
+    port = args.port
+    log_path = args.log
+
+    log = flib.setup_logging(log_path, "catalogue_ui", "debug")
+    logging.getLogger(log)
+
+    if env == "dev":
+        app.run(host=host, port=port, debug=True)
+    else:
+        serve(app, listen=f"{host}:{port}")
+
+
+if __name__ == '__main__':
+    commands = argparser()
+    main(commands)
