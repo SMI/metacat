@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% set active_page = "report" %}
+{% block links %}
+  <script type='text/javascript' src="{{url_for('static', filename='js/chart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/pieChart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/lineChart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/palette.js')}}"></script>
+{% endblock %}
+{% block content %}
+  <div class="container" style="margin-bottom: 30px;">
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI PACS Metadata Catalogue {% endblock %}</h1>
+    <h3>Modality stats</h3>
+    <div>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;">Images per month for all available modalities</h4>
+      <canvas id="chartMonthlyImages"></canvas>
+    </div>
+    <br>
+    <div>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;">Series per month for all available modalities</h4>
+      <canvas id="chartMonthlySeries"></canvas>
+    </div>
+    <br>
+    <div>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;">Studies per month for all available modalities</h4>
+      <canvas id="chartMonthlyStudies"></canvas>
+    </div>
+    <br>
+    <div class="container">
+      <h3>Tag stats</h3>
+      <div class="row">
+        <div class="col-sm">
+          <h4>Public status</h4>
+          <canvas id="piePublic"></canvas>
+        </div>
+        <div class="col-sm">
+          <h4>Confidentiality profile</h4>
+          <canvas id="pieIdentifiable"></canvas>
+        </div>
+        <div class="col-sm">
+          <h4>Promotion status</h4>
+          <canvas id="piePromotion"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script type="text/javascript">
+    var tag_stats = JSON.parse('{{ tag_stats|tojson }}')
+    var monthlyCounts = JSON.parse('{{ monthly_counts|tojson }}')
+
+    generateLineChart(monthlyCounts["dates"], monthlyCounts["image_counts"], 'chartMonthlyImages')
+    generateLineChart(monthlyCounts["dates"], monthlyCounts["series_counts"], 'chartMonthlySeries')
+    generateLineChart(monthlyCounts["dates"], monthlyCounts["study_counts"], 'chartMonthlyStudies')
+
+    var public_labels = Object.keys(tag_stats["public"])
+    var public_values = Object.values(tag_stats["public"])
+    generatePieChart(public_labels, public_values, 'piePublic')
+
+    var conf_labels = Object.keys(tag_stats["confidentiality"])
+    var conf_values = Object.values(tag_stats["confidentiality"])
+    generatePieChart(conf_labels, conf_values, 'pieIdentifiable')
+
+    var prom_labels = Object.keys(tag_stats["promotion"])
+    var prom_values = Object.values(tag_stats["promotion"])
+    generatePieChart(prom_labels, prom_values, 'piePromotion')
+  </script>
+{% endblock %}

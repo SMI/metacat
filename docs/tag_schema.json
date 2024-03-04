@@ -1,0 +1,17 @@
+{
+    "tag": "<TAG_NAME>",
+    "dicomID": "<DICOM_STANDARD_ID>",
+    "description": "<DICOM_STANDARD_DESCR>",
+    "linkToStandard": "<DICOM_STANDARD_LINK>",
+    "standardDate": "<TIMESTAMP>",
+    "public": "<true|false>",
+    "promotionStatus": "<blocked|unavailable|processing|available>",
+    "promotionStatusDate": "<TIMESTAMP>",
+    "retired": "<Y|N>",
+    "informationEntity": "<Study|Series|Image>",
+    "basicProfile": "<DICOM_STANDARD_BASIC_PROFILE>",
+    "valueRepresentation": "<DICOM_DICT_VR>",
+    "valueMultiplicity": "<DICOM_DICT_MULTIPLICITY>",
+    "type": "<DICOM_STANDARD_DATA_TYPE>",
+    "modalities": ["MODALITY_NAME"]
+}

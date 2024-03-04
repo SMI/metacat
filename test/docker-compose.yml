@@ -1,0 +1,40 @@
+---
+version: "3.7"
+
+services:
+  mariadb:
+    container_name: smi-mariadb
+    image: mariadb:latest
+    environment:
+      - MYSQL_USER=${MYSQLUSER:-root}
+      - MYSQL_ROOT_PASSWORD=${MYSQLPASS:-YourStrongPassw0rd}
+    ports:
+      - 3306:3306
+
+  mongodb:
+    container_name: smi-mongodb
+    image: mongo:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MONGO_INITDB_ROOT_USERNAME=${MONGOUSER:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGOPASS:-YourStrongPassw0rd}
+    ports:
+      - 27017:27017
+
+  catalogue:
+    container_name: smi-catalogue
+    build: .
+    command: sh -c "
+      . /home/metacat/test/setup_env.sh &&
+      . /home/metacat/test/populate_dbs.sh &&
+      . /home/metacat/test/init_catalogue.sh &&
+      . /home/metacat/test/start_frontend.sh"
+    links:
+      - mariadb
+    volumes:
+      - ../:/home/metacat
+    ports:
+      - 5002:5002
+    depends_on:
+      - mongodb

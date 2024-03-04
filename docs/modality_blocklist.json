@@ -1,0 +1,10 @@
+[
+    {
+        "modality" : null,
+        "blockReason" : "Represents all documents with null for modality."
+    },
+    {
+        "modality" : "*",
+        "blockReason" : "Represents all documents with * for modality."
+    }
+]

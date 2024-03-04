@@ -1,0 +1,229 @@
+Term,Label
+head,head
+skull,head
+cranium,head
+cranial,head
+kraniyal,head
+craneo,head
+cranio,head
+craneal,head
+hippocamp,head
+intracran,head
+sinus,head
+sinsu,head
+sinogram,head
+nazal,head
+nasal,head
+cochlea,head
+auditory,head
+inner ear,head
+innerear,head
+middle ear,head
+oral,head
+mouth,head
+mandib,head
+maxill,head
+masto,head
+masti,head
+periapic,head
+occlus,head
+optic,head
+sialogram,head
+jaw,head
+tongue,head
+speech,head
+palatogram,head
+petrous,head
+salivary,head
+sal gland,head
+parotid,head
+naso,head
+dental,head
+denti,head
+cerebr,head
+brain,head
+face,head
+facial,head
+temporal,head
+tm joint,head
+pituitary,head
+ceph,head
+circle of willis,head
+trigeminal,head
+eye,head
+pit fossa,head
+orbit,head
+scalp,head
+orthopantomogra,head
+opg,head
+dacrocystogram,head
+stroke,head
+lacri,head
+neck,neck
+neck cervical,neck
+larynx,neck
+thyroid,neck
+thyrd,neck
+thyro,neck
+chest,chest
+torso,chest
+thor,chest
+torax,chest
+pulm,chest
+pneum,chest
+lung,chest
+heart,chest
+coronary,chest
+aort,chest
+ventric,chest
+cardiac,chest
+myocardial,chest
+rib,chest
+sternum,chest
+clavic,chest
+subclavian,chest
+mam,chest
+breast,chest
+mediastinum,chest
+pacemaker,chest
+mps tf,chest
+mps mibi tf,chest
+muga,chest
+stress myo,chest
+exercise tolerance,chest
+vq,chest
+maa perf,chest
+cxr,chest
+chest to pelvis,chest/abdomen/pelvis
+carotid,chest/neck
+oesophagus,chest/abdomen
+abd,abdomen
+ctpab,abdomen
+kidney,abdomen
+reno,abdomen
+renal,abdomen
+nieren,abdomen
+liver,abdomen
+panc,abdomen
+spleen,abdomen
+gastro,abdomen
+gastric,abdomen
+intestin,abdomen
+esopha,abdomen
+colon,abdomen/pelvis
+bowel,abdomen
+nephrosto,abdomen
+mesenteric,abdomen
+cholangiogr,abdomen
+foetus,abdomen
+foetal,abdomen
+fetal,abdomen
+enteroclysis,abdomen
+nephrolithotomy,abdomen
+bile,abdomen
+biliar,abdomen
+ercp,abdomen
+e r c p,abdomen
+dmsa,abdomen
+sehcat,abdomen
+meckel,abdomen
+hida,abdomen
+stomac,abdomen
+intussusception,abdomen
+gallbladder,abdomen
+ureter,abdomen/pelvis
+ureth,abdomen/pelvis
+enema,abdomen/pelvis
+peritone,pelvis/abdomen
+cystometrogram,abdomen/pelvis
+pel,pelvis
+plvis,pelvis
+pevis,pelvis
+groin,pelvis
+iliac,pelvis
+urog,pelvis
+urinary,pelvis
+bladder,pelvis
+hip,pelvis
+acetabulum,pelvis
+rectal,pelvis
+rectum,pelvis
+anal,pelvis
+sacral,pelvis
+sacro,pelvis
+sacrum,pelvis
+prostate,pelvis
+perineum,pelvis
+proctogram,pelvis
+penis,pelvis
+gynae,pelvis
+cervix,pelvis
+endometrial,pelvis
+fistula,pelvis
+buttock,pelvis
+coccyx,pelvis
+hysterosalp,pelvis
+hysterogram,pelvis
+hsg,pelvis
+uterus,pelvis
+uterine,pelvis
+testicul,pelvis
+micturating cysto,pelvis
+mcug,pelvis
+salpingo,pelvis
+bbs,pelvis
+pouch,pelvis
+upper lim,upper_limb
+upper ex,upper_limb
+humerus,upper_limb
+shoulder,upper_limb
+scapula,upper_limb
+wrist,upper_limb
+hand,upper_limb
+scaphoid,upper_limb
+arm,upper_limb
+elbow,upper_limb
+finger,upper_limb
+thumb,upper_limb
+ulna,upper_limb
+brachial plexus,upper_limb
+carpal,upper_limb
+picc line,upper_limb
+lower lim,lower_limb
+lower ex,lower_limb
+femur,lower_limb
+femoral,lower_limb
+thigh,lower_limb
+tibia,lower_limb
+tib fib,lower_limb
+tib and fib,lower_limb
+os calcis,lower_limb
+calcane,lower_limb
+leg,lower_limb
+foot,lower_limb
+feet,lower_limb
+subtalar,lower_limb
+toe,lower_limb
+knee,lower_limb
+ankle,lower_limb
+patella,lower_limb
+heel,lower_limb
+popliteal,lower_limb
+spine,spine
+spinal,spine
+epidural,spine
+lumbar,spine
+lumbal,spine
+lomb,spine
+vertebr,spine
+facet joint,spine
+facet jt,spine
+scoliosis,spine
+odontoid,spine
+cervical spine,spine/neck
+spine cervical,spine/neck
+whole body,whole_body
+wbody,whole_body
+wb,whole_body
+total body,whole_body
+fullbody,whole_body

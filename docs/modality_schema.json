@@ -1,0 +1,58 @@
+{
+    "modality": "<MODALITY_NAME>",
+    "dicomID": "<DICOM_STANDARD_ID>",
+    "description": "<DICOM_STANDARD_DESCR>",
+    "linkToStandard": "<DICOM_STANDARD_LINK>",
+    "standardDate": "<TIMESTAMP>",
+    "totalNoImgRaw": "<NUMBER>",
+    "totalNoSeriesRaw": "<NUMBER>",
+    "avgNoImgPerSeriesRaw": "<totalNoImgRaw/totalNoSeriesRaw>",
+    "minNoImgPerSeriesRaw": "<MIN>",
+    "maxNoImgPerSeriesRaw": "<MAX>",
+    "stdDevImgPerSeriesRaw": "<STANDARD_DEVIATION>",
+    "totalNoStudiesRaw": "<NUMBER>",
+    "avgNoSeriesPerStudyRaw": "<totalNoSeriesRaw/totalNoStudiesRaw>",
+    "minNoSeriesPerStudyRaw": "<MIN>",
+    "maxNoSeriesPerStudyRaw": "<MAX>",
+    "stdDevSeriesPerStudyRaw": "<STANDARD_DEVIATION>",
+    "countsPerMonthRaw": [
+        {
+            "date": "<YYYY/MM>",
+            "imageCount": "<NUMBER>",
+            "seriesCount": "<NUMBER>",
+            "studyCount": "<NUMBER>"
+        }
+    ],
+    "countsDateRaw": "<TIMESTAMP>",
+    "totalNoImgStaging": "<NUMBER>",
+    "totalNoSeriesStaging": "<NUMBER>",
+    "countsPerMonthStaging": [
+        {
+            "date": "<YYYY/MM>",
+            "imageCount": "<NUMBER>",
+            "seriesCount": "<NUMBER>",
+            "studyCount": "<NUMBER>"
+        }
+    ],
+    "countsDateStaging": "<TIMESTAMP>",
+    "totalNoImgLive": "<NUMBER>",
+    "totalNoSeriesLive": "<NUMBER>",
+    "countsPerMonthLive": [
+        {
+            "date": "<YYYY/MM>",
+            "imageCount": "<NUMBER>",
+            "seriesCount": "<NUMBER>",
+            "studyCount": "<NUMBER>"
+        }
+    ],
+    "countsDateLive": "<TIMESTAMP>",
+    "tags": [
+        {
+            "tag": "<TAG_NAME>",
+            "completenessRaw": "<NUMBER>",
+            "tagQualityDateRaw": "<TIMESTAMP>"
+        }
+    ],
+    "promotionStatus": "<blocked|unavailable|processing|available>",
+    "promotionStatusDate": "<TIMESTAMP>"
+}

@@ -1,0 +1,132 @@
+CREATE DATABASE IF NOT EXISTS {{ Database | sqlsafe }};
+
+CREATE TABLE IF NOT EXISTS {{ Modality | sqlsafe }}_StudyTable(
+    PatientID VARCHAR(64) NOT NULL,
+    StudyInstanceUID VARCHAR(64) NOT NULL,
+    StudyDate DATE,
+    StudyTime TIME,
+    ModalitiesInStudy TEXT,
+    StudyDescription VARCHAR(64),
+    AccessionNumber VARCHAR(16),
+    PatientSex VARCHAR(16),
+    PatientBirthDate DATE,
+    NumberOfStudyRelatedInstances INT(11),
+    PRIMARY KEY (StudyInstanceUID)
+);
+
+REPLACE INTO {{ Modality | sqlsafe }}_StudyTable(
+    PatientID,
+    StudyInstanceUID,
+    StudyDate,
+    StudyTime,
+    ModalitiesInStudy,
+    StudyDescription,
+    AccessionNumber,
+    PatientSex,
+    PatientBirthDate,
+    NumberOfStudyRelatedInstances
+) VALUES (
+    "{{ PatientID | sqlsafe }}",
+    "{{ StudyInstanceUID | sqlsafe }}",
+    STR_TO_DATE("{{ StudyDate | sqlsafe }}", '%Y%m%d'),
+    "{{ StudyTime | sqlsafe }}",
+    "{{ ModalitiesInStudy | sqlsafe }}",
+    "{{ StudyDescription | sqlsafe }}",
+    "{{ AccessionNumber | sqlsafe }}",
+    "{{ PatientSex | sqlsafe }}",
+    STR_TO_DATE("{{ PatientBirthDate | sqlsafe }}", '%Y%m%d'),
+    "{{ NumberOfStudyRelatedInstances | sqlsafe }}"
+);
+
+CREATE TABLE IF NOT EXISTS {{ Modality | sqlsafe }}_SeriesTable(
+    StudyInstanceUID VARCHAR(64) NOT NULL,
+    SeriesInstanceUID VARCHAR(64) NOT NULL,
+    Modality VARCHAR(16),
+    InstitutionName VARCHAR(64),
+    SeriesDescription VARCHAR(64),
+    SeriesDate DATE,
+    SeriesTime TIME,
+    BodyPartExamined VARCHAR(16),
+    SeriesNumber INT(11),
+    PRIMARY KEY (SeriesInstanceUID)
+);
+
+REPLACE INTO {{ Modality | sqlsafe }}_SeriesTable(
+    StudyInstanceUID,
+    SeriesInstanceUID,
+    Modality,
+    InstitutionName,
+    SeriesDescription,
+    SeriesDate,
+    SeriesTime,
+    BodyPartExamined,
+    SeriesNumber
+) VALUES (
+    "{{ StudyInstanceUID | sqlsafe }}",
+    "{{ SeriesInstanceUID | sqlsafe }}",
+    "{{ Modality | sqlsafe }}",
+    "{{ InstitutionName | sqlsafe }}",
+    "{{ SeriesDescription | sqlsafe }}",
+    STR_TO_DATE("{{ SeriesDate | sqlsafe }}", '%Y%m%d'),
+    "{{ SeriesTime | sqlsafe }}",
+    "{{ BodyPartExamined | sqlsafe }}",
+    "{{ SeriesNumber | sqlsafe }}"
+);
+
+CREATE TABLE IF NOT EXISTS {{ Modality | sqlsafe }}_ImageTable(
+    StudyInstanceUID VARCHAR(64),
+    SeriesInstanceUID VARCHAR(64) NOT NULL,
+    SOPInstanceUID VARCHAR(64) NOT NULL,
+    ImageType TEXT,
+    Manufacturer VARCHAR(64),
+    AcquisitionNumber INT(11),
+    AcquisitionDate DATE,
+    AcquisitionTime TIME,
+    PixelSpacing TEXT,
+    PRIMARY KEY (SOPInstanceUID)
+);
+
+REPLACE INTO {{ Modality | sqlsafe }}_ImageTable(
+    StudyInstanceUID,
+    SeriesInstanceUID,
+    SOPInstanceUID,
+    ImageType,
+    Manufacturer,
+    AcquisitionNumber,
+    AcquisitionDate,
+    AcquisitionTime,
+    PixelSpacing
+) VALUES (
+    "{{ StudyInstanceUID | sqlsafe }}",
+    "{{ SeriesInstanceUID | sqlsafe }}",
+    "{{ SOPInstanceUID | sqlsafe }}",
+    "{{ ImageType | sqlsafe }}",
+    "{{ Manufacturer | sqlsafe }}",
+    "{{ AcquisitionNumber | sqlsafe }}",
+    STR_TO_DATE("{{ AcquisitionDate | sqlsafe }}", '%Y%m%d'),
+    "{{ AcquisitionTime | sqlsafe }}",
+    "{{ PixelSpacing | sqlsafe }}"
+);
+
+CREATE TABLE IF NOT EXISTS {{ Modality | sqlsafe }}_Aggregate_ImageType(
+    SeriesInstanceUID VARCHAR(64) NOT NULL,
+    ORIGINAL BIGINT(21) NOT NULL,
+    DERIVED BIGINT(21) NOT NULL,
+    `PRIMARY` BIGINT(21) NOT NULL,
+    `SECONDARY` BIGINT(21) NOT NULL,
+    PRIMARY KEY (SeriesInstanceUID)
+);
+
+REPLACE INTO {{ Modality | sqlsafe }}_Aggregate_ImageType(
+    SeriesInstanceUID,
+    ORIGINAL,
+    DERIVED,
+    `PRIMARY`,
+    `SECONDARY`
+) VALUES (
+    "{{ SeriesInstanceUID | sqlsafe }}",
+    "{{ ORIGINAL | sqlsafe }}",
+    "{{ DERIVED | sqlsafe }}",
+    "{{ PRIMARY | sqlsafe }}",
+    "{{ SECONDARY | sqlsafe }}"
+);

@@ -1,0 +1,10 @@
+[Unit]
+Description="Metadata Catalogue"
+After=network.target
+
+[Service]
+User=root
+ExecStart=/home/metacat/catalogue_ui/run_app.sh
+
+[Install]
+WantedBy=multi-user.target

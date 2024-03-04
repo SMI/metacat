@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% set active_page = "modality" %}
+{% block content %}
+  <div class="container" style="margin-bottom: 30px;">
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI PACS Metadata Catalogue {% endblock %}</h1>
+    <div class="dropdown" style="margin-bottom: 30px;">
+      <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+        Filter <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><div class="dropdown-item filter" id="blocked">blocked</div></li>
+        <li><div class="dropdown-item filter" id="unavailable">unavailable</div></li>
+        <li><div class="dropdown-item filter" id="processing">processing</div></li>
+        <li><div class="dropdown-item filter" id="available">available</div></li>
+        <li class="dropdown-divider"></li>
+        <li><div class="dropdown-item" id="clearFilter">Clear filter</div></li>
+      </ul>
+    </div>
+    <div class="card-columns">
+      {% for modality in modalities %}
+        {% if modality['promotionStatus'] == 'available' %}
+          <div class="card border-success">
+        {% elif modality['promotionStatus'] == 'processing' %}
+          <div class="card border-info">
+        {% elif modality['promotionStatus'] == 'unavailable' %}
+          <div class="card border-warning">
+        {% elif modality['promotionStatus'] == 'blocked' %}
+          <div class="card border-secondary">
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title">{{ modality['modality'] }}</h5>
+            {% if modality['promotionStatus'] == 'available' %}
+              <p class="card-text"><b>Percent of images live:</b> {{ calculate_percentage(modality['totalNoImagesLive'], modality['totalNoImagesRaw']) }}%</p>
+              <p><b>Promotion status:</b><span class="card-text text-success" data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ modality['promotionStatusDate'] }}"> {{ modality['promotionStatus'] }}</span></p>
+              <a href="/api/{{ modality['modality'] }}" class="card-link">Details</a>
+              <a href="/api/{{ modality['modality'] }}/tags" class="card-link">Tags</a>
+            {% elif modality['promotionStatus'] == 'processing' %}
+              <p class="card-text"><b>Percent of images processing:</b> {{ calculate_percentage(modality['totalNoImagesStaging'], modality['totalNoImagesRaw']) }}%</p>
+              <p><b>Promotion status:</b><span class="card-text text-info" data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ modality['promotionStatusDate'] }}"> {{ modality['promotionStatus'] }}</span></p>
+              <a href="/api/{{ modality['modality'] }}" class="card-link">Details</a>
+              <a href="/api/{{ modality['modality'] }}/tags" class="card-link">Tags</a>
+            {% elif modality['promotionStatus'] == 'unavailable' %}
+              <p><b>Number of raw images:</b> {{ modality['totalNoImagesRaw'] }}</p>
+              <p><b>Promotion status:</b><span class="card-text text-warning" data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ modality['promotionStatusDate'] }}"> {{ modality['promotionStatus'] }}</span></p>
+              <a href="/api/{{ modality['modality'] }}" class="card-link">Details</a>
+              <a href="/api/{{ modality['modality'] }}/tags" class="card-link">Tags</a>
+            {% elif modality['promotionStatus'] == 'blocked' %}
+              <p><b>Number of raw images:</b> {{ modality['totalNoImagesRaw'] }}</p>
+              <p><b>Promotion status:</b><span class="card-text text-secondary" data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ modality['promotionStatusDate'] }}"> {{ modality['promotionStatus'] }}</span></p>
+              <p><b>Block reason:</b><span class="card-text text-secondary"> {{ modality['blockReason'] }}</span></p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $("#blocked").click(function() {
+        var value = "Promotion status: blocked";
+        $(".container .card").filter(function() {
+          $(this).toggle($(this).text().indexOf(value) > -1)
+        });
+      });
+
+      $("#unavailable").click(function() {
+        var value = "Promotion status: unavailable";
+        $(".container .card").filter(function() {
+          $(this).toggle($(this).text().indexOf(value) > -1)
+        });
+      });
+
+      $("#processing").click(function() {
+          var value = "Promotion status: processing";
+        $(".container .card").filter(function() {
+          $(this).toggle($(this).text().indexOf(value) > -1)
+        });
+      });
+
+      $("#available").click(function() {
+        var value = "Promotion status: available";
+        $(".container .card").filter(function() {
+          $(this).toggle($(this).text().indexOf(value) > -1)
+        });
+      });
+
+      $("#clearFilter").click(function() {
+        $(".container .card").filter(function() {
+          $(this).toggle($(this).text().indexOf("") > -1)
+        });
+      });
+    });
+  </script>
+{% endblock %}

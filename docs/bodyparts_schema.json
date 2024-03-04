@@ -1,0 +1,65 @@
+{
+    "dictionaryVersion": "<NUMBER>", // User provided argument
+    "totalNoSeriesLive": "<NUMBER>", // sum of modality totalNoSeriesLive values
+    "totalNoLabelledSeries": "<NUMBER>", // sum of count column of SeriesDescription tag labelling output
+    "labellingDate": "<TIMESTAMP>", // date from SeriesDescription tag labelling output
+    "percentLabelledSeries": "<NUMBER>", // 100 * (totalNoLabelledSeries/totalNoSeriesLive)
+    "totalNoValidatedSeries": "<NUMBER>", // sum of count column of SeriesDescription validated split file
+    "percentValidatedSeries": "<NUMBER>", // (totalNoSeriesLive/totalNoValidatedSeries)*100
+    "stats": [
+        {
+            "modality": "<MODALITY>",
+            "totalNoSeriesLive": "<NUMBER>", // from modality metadata
+            "countsDateLive": "<NUMBER>", // from modality metadata
+            "totalNoLabelledSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output
+            "percentLabelledSeries": "<NUMBER>", // 100 * (totalNoLabelledSeries/totalNoSeriesLive)
+            "labels": {
+                "head": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where head is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of head column of modality-specific group labelling output where head is not empty
+                },
+                "neck": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where neck is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of neck column of modality-specific group labelling output where neck is not empty
+                },
+                "chest": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where chest is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of chest column of modality-specific group labelling output where chest is not empty
+                },
+                "abdomen": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where abdomen is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of abdomen column of modality-specific group labelling output where abdomen is not empty
+                },
+                "pelvis": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where pelvis is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of pelvis column of modality-specific group labelling output where pelvis is not empty
+                },
+                "upper_limb": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where upper_limb is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of upper_limb column of modality-specific group labelling output where upper_limb is not empty
+                },
+                "lower_limb": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where lower_limb is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of lower_limb column of modality-specific group labelling output where lower_limb is not empty
+                },
+                "spine": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where spine is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of spine column of modality-specific group labelling output where spine is not empty
+                },
+                "whole_body": {
+                    "labelledNoSeries": "<NUMBER>", // sum of count column of modality-specific group labelling output where whole_body is not empty
+                    "percentLabelledSeries": "<NUMBER>", // 100 * (labelledNoSeries/totalNoSeriesLive)
+                    "avgConfidence": "<NUMBER>" // avg of whole_body column of modality-specific group labelling output where whole_body is not empty
+                }
+            }
+        }
+    ]
+}

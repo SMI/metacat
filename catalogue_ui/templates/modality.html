@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% set active_page = "modality" %}
+{% block links %}
+  <script type='text/javascript' src="{{url_for('static', filename='js/chart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/pieChart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/barChart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/lineChart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/palette.js')}}"></script>
+{% endblock %}
+{% block content %}
+  <div class="container" style="margin-bottom: 30px;">
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI PACS Metadata Catalogue {% endblock %}</h1>
+    <h2>{{ modality['modality'] }}</h2>
+
+    {% autoescape off %}
+      <h5 class="card-subtitle mb-2 text-muted" data-toggle="tooltip" data-placement="bottom" title="{{ modality['descriptionSource'] }}">{{ modality['description'] }}</h5>
+    {% endautoescape %}
+
+    <a class="btn btn-info" style="margin-bottom: 30px;" href="/api/{{ modality['modality'] }}/tags" role="button">Tags</a>
+
+    <div class="card-columns">
+      <div class="card border-warning">
+        <div class="card-body">
+          <h5 class="card-title" data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ modality['countsDateRaw'] }}">Raw</h5>
+
+          <p class="card-text"><b>Total no. images:</b> {{ modality['totalNoImagesRaw'] }}</p>
+          <p class="card-text"><b>Total no. series:</b> {{ modality['totalNoSeriesRaw'] }}</p>
+          <p class="card-text"><b>Total no. studies:</b> {{ modality['totalNoStudiesRaw'] }}</p>
+          <p class="card-text"><b>Avg no. images per series:</b> {{ modality['avgNoImagesPerSeriesRaw'] }}</p>
+          <p class="card-text"><b>Min no. images per series:</b> {{ modality['minNoImagesPerSeriesRaw'] }}</p>
+          <p class="card-text"><b>Max no. images per series:</b> {{ modality['maxNoImagesPerSeriesRaw'] }}</p>
+          <p class="card-text"><b>Std dev images per series:</b> {{ modality['stdDevImagesPerSeriesRaw'] }}</p>
+          <p class="card-text"><b>Avg no. series per study:</b> {{ modality['avgNoSeriesPerStudyRaw'] }}</p>
+          <p class="card-text"><b>Min no. images per series:</b> {{ modality['minNoSeriesPerStudyRaw'] }}</p>
+          <p class="card-text"><b>Max no. images per series:</b> {{ modality['maxNoSeriesPerStudyRaw'] }}</p>
+          <p class="card-text"><b>Std dev images per series:</b> {{ modality['stdDevSeriesPerStudyRaw'] }}</p>
+        </div>
+      </div>
+
+      {% if modality['totalNoImagesStaging'] %}
+        <div class="card border-info">
+          <div class="card-body">
+            <h5 class="card-title" data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ modality['countsDateStaging'] }}">Staging</h5>
+
+            <p class="card-text"><b>Total no. images:</b> {{ modality['totalNoImagesStaging'] }}</p>
+            <p class="card-text"><b>Total no. series:</b> {{ modality['totalNoSeriesStaging'] }}</p>
+            <p class="card-text"><b>Total no. studies:</b> {{ modality['totalNoStudiesStaging'] }}</p>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if modality['totalNoImagesLive'] %}
+        <div class="card border-success">
+            <div class="card-body">
+                <h5 class="card-title" data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ modality['countsDateLive'] }}">Live</h5>
+
+                <p class="card-text"><b>Total no. images:</b> {{ modality['totalNoImagesLive'] }}</p>
+                <p class="card-text"><b>Total no. series:</b> {{ modality['totalNoSeriesLive'] }}</p>
+                <p class="card-text"><b>Total no. studies:</b> {{ modality['totalNoStudiesLive'] }}</p>
+            </div>
+        </div>
+      {% endif %}
+    </div>
+    <div>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;" data-toggle="tooltip" data-placement="bottom" title="Number of images grouped by StudyDate year and month. Non-accumulative.">Number of images per month</h4>
+      <canvas id="chartImages"></canvas>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;" data-toggle="tooltip" data-placement="bottom" title="Number of series grouped by StudyDate year and month. Non-accumulative.">Number of series per month</h4>
+      <canvas id="chartSeries"></canvas>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;" data-toggle="tooltip" data-placement="bottom" title="Number of studies grouped by StudyDate year and month. Non-accumulative.">Number of studies per month</h4>
+      <canvas id="chartStudies"></canvas>
+    </div>
+    <div class="container">
+      <h3>Tags stats</h3>
+      <div class="row">
+        <div class="col-sm">
+          <h4>Completeness</h4>
+          <canvas id="pieSparse"></canvas>
+        </div>
+        <div class="col-sm">
+          <h4>Public status</h4>
+          <canvas id="piePublic"></canvas>
+        </div>
+        <div class="col-sm">
+          <h4>Confidentiality profile</h4>
+          <canvas id="pieIdentifiable"></canvas>
+        </div>
+        <div class="col-sm">
+          <h4>Promotion status</h4>
+          <canvas id="piePromotion"></canvas>
+        </div>
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script type="text/javascript">
+    var counts = JSON.parse('{{ counts|tojson }}')
+
+    generate3LineChart(counts["dates"],
+                       'Image count raw', counts["images_raw"],
+                       'Image count staging', counts["images_staging"],
+                       'Image count live', counts["images_live"],
+                       'chartImages'
+                      )
+
+    generate3LineChart(counts["dates"],
+                       'Series count raw', counts["series_raw"],
+                       'Series count staging', counts["series_staging"],
+                       'Series count live', counts["series_live"],
+                       'chartSeries'
+                      )
+
+    generate3LineChart(counts["dates"],
+                       'Studies count raw', counts["study_raw"],
+                       'Studies count staging', counts["study_staging"],
+                       'Studies count live', counts["study_live"],
+                       'chartStudies'
+                      )
+
+    var tag_stats = JSON.parse('{{ tags|tojson }}')
+    var sparse_labels = Object.keys(tag_stats["sparseness"])
+    var sparse_values = Object.values(tag_stats["sparseness"])
+    generatePieChart(sparse_labels, sparse_values, 'pieSparse')
+
+    var public_labels = Object.keys(tag_stats["public"])
+    var public_values = Object.values(tag_stats["public"])
+    generatePieChart(public_labels, public_values, 'piePublic')
+
+    var conf_labels = Object.keys(tag_stats["confidentiality"])
+    var conf_values = Object.values(tag_stats["confidentiality"])
+    generatePieChart(conf_labels, conf_values, 'pieIdentifiable')
+
+    var prom_labels = Object.keys(tag_stats["promotion"])
+    var prom_values = Object.values(tag_stats["promotion"])
+    generatePieChart(prom_labels, prom_values, 'piePromotion')
+  </script>
+{% endblock %}

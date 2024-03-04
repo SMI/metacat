@@ -1,0 +1,129 @@
+{
+    "header": {
+        "DirectoryPath": "YYYY/MM/DD/ACCESSION_NUMBER",
+        "NationalPACSAccessionNumber": "SH/2819497684894126",
+        "ImagesInSeries": "IS"
+    },
+    "ImageType": "CS/ORIGINAL,PRIMARY|ORIGINAL,SECONDARY|DERIVED,PRIMARY|DERIVED,SECONDARY",
+    "InstanceCreationDate": "DA/%Y%m%d",
+    "InstanceCreationTime": "TM/%H%M%S",
+    "SOPClassUID": "UI/1.2.840.10008.5.1.4.1.1.4",
+    "SOPInstanceUID": "UI/1.3.6.1.4.1.9328.50.51.267485233220005486",
+    "StudyDate": "DA/%Y%m%d",
+    "StudyTime": "TM/%H%M%S",
+    "SeriesDate": "DA/%Y%m%d",
+    "SeriesTime": "TM/%H%M%S",
+    "AccessionNumber": "SH/2819497684894126",
+    "AcquisitionNumber": "IS",
+    "AcquisitionDate": "DA/%Y%m%d",
+    "AcquisitionTime": "TM/%H%M%S",
+    "Modality": "CS/CT|MR|PT|NM|US|PR|*",
+    "ModalitiesInStudy": "CS/CT|MR|*",
+    "Manufacturer": "LO/SIEMENS|Philips Medical Systems|None|",
+    "InstitutionName": "LO",
+    "ReferringPhysicianName": "PN",
+    "StudyDescription": "LO/thor abd pel|mandible trauma|CT^lung^scan|None|",
+    "SeriesDescription": "LO/thor abd pel|mandible trauma|CT^lung^scan|None|",
+    "BodyPartExamined": "CS/HEAD|CHEST|ABDOMEN|PELVIS|None|",
+    "ReferencedSeriesSequence": [
+        {
+            "ReferencedImageSequence": [
+                {
+                    "ReferencedSOPClassUID": "UI/1.2.840.10008.5.1.4.1.1.4",
+                    "ReferencedSOPInstanceUID": "UI/1.3.6.1.4.1.9328.50.51.267485233220005486"
+                }
+            ],
+            "SeriesInstanceUID": "UI/1.2.840.10008.5.1.4.1.1.4"
+        }
+    ],
+    "SourceImageSequence": [
+        {
+            "ReferencedSOPClassUID": "UI/1.2.840.10008.5.1.4.1.1.4",
+            "ReferencedSOPInstanceUID": "UI/1.3.6.1.4.1.9328.50.51.267485233220005486"
+        }
+    ],
+    "PatientName": "PN",
+    "PatientID": "LO",
+    "IssuerOfPatientID": "LO",
+    "PatientBirthDate": "DA/%Y%m%d",
+    "PatientSex": "CS/F|M",
+    "OtherPatientIDsSequence": [
+        {
+            "PatientID": "LO",
+            "IssuerOfPatientID": "LO",
+            "TypeOfPatientID": "CS"
+        }
+    ],
+    "StudyInstanceUID": "UI/1.2.840.10008.5.1.4.1.1.4",
+    "SeriesInstanceUID": "UI/1.2.840.10008.5.1.4.1.1.4",
+    "StudyID": "SH/847542",
+    "SeriesNumber": "IS",
+    "InstanceNumber": "IS",
+    "NumberOfStudyRelatedInstances": "IS",
+    "RescaleIntercept": "DS",
+    "RescaleSlope": "DS",
+    "RescaleType": "LO",
+    "SoftcopyVOILUTSequence": [
+        {
+            "WindowCenter": "DS",
+            "WindowWidth": "DS",
+            "WindowCenterWidthExplanation": "LO",
+            "VOILUTFunction": "CS"
+        }
+    ],
+    "GraphicAnnotationSequence": [
+        {
+            "GraphicLayer": "CS",
+            "GraphicObjectSequence": [
+                {
+                    "GraphicAnnotationUnits": "CS",
+                    "GraphicDimensions": [
+                        "US"
+                    ],
+                    "NumberOfGraphicPoints": [
+                        "US"
+                    ],
+                    "GraphicData": [
+                        "FL"
+                    ],
+                    "GraphicType": "CS/POINT|POLYNE|INTERPOLATED|CIRCLE|ELLIPSE",
+                    "GraphicFilled": "CS/Y|N"
+                }
+            ]
+        }
+    ],
+    "ImageHorizontalFlip": "CS/Y|N",
+    "ImageRotation": [
+        "US"
+    ],
+    "DisplayedAreaSelectionSequence": [
+        {
+            "DisplayedAreaTopLeftHandCorner": [
+                "SL"
+            ],
+            "DisplayedAreaBottomRightHandCorner": [
+                "SL"
+            ],
+            "PresentationSizeMode": "CS/SCALE TO FIT|TRUE SIZE|MAGNIFY",
+            "PixelSpacing": "DS"
+        }
+    ],
+    "GraphicLayerSequence": [
+        {
+            "GraphicLayer": "CS",
+            "GraphicLayerOrder": "IS",
+            "GraphicLayerRecommendedDisplayGrayscaleValue": [
+                "US"
+            ],
+            "GraphicLayerRecommendedDisplayRGBValue": [
+                "US"
+            ]
+        }
+    ],
+    "ContentLabel": "CS",
+    "ContentDescription": "LO",
+    "PresentationCreationDate": "DA/%Y%m%d",
+    "PresentationCreationTime": "TM/%H%M%S",
+    "ContentCreatorName": "PN",
+    "(0010,1010) - Unknown": "IS"
+}

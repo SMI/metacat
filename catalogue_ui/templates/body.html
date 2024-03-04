@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% set active_page = "labels" %}
+{% block links %}
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/jquery.dataTables.min.css')}}">
+{% endblock %}
+{% block content %}
+  <div class="container" style="margin-bottom: 30px;">
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI PACS Metadata Catalogue {% endblock %}</h1>
+    <h3>Body part labelling stats</h3>
+    <div>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;">Labelling coverage by modality</h4>
+      <canvas id="labelCovBar"></canvas>
+    </div>
+    <br>
+    <div>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;">Labelling log</h4>
+      <table id="logs" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Labelling date</th>
+            <th>Dictionary version</th>
+            <th>Total labelled series (%)</th>
+            <th>Total validated series (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+            <tr>
+              <td>{{ log.get('labellingDate') }}</td>
+              <td>{{ log.get('dictionaryVersion') }}</td>
+              <td>{{ log.get('percentLabelledSeries', 'Not labelled') }}</td>
+              <td>{{ log.get('percentValidatedSeries', 'Not validated') }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script type='text/javascript' src="{{url_for('static', filename='js/chart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/barChart.js')}}"></script>
+  <script type='text/javascript' src="{{url_for('static', filename='js/palette.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.dataTables.min.js')}}"></script>
+  <script type="text/javascript">
+    var labels = JSON.parse('{{ labels|tojson }}')
+    var data = JSON.parse('{{ data|tojson }}')
+
+    generateBarChart(labels, data, 'labelCovBar', 'y')
+
+    var table = $('#logs').DataTable({
+      info: false,
+      ordering: false,
+      paging: false,
+      searching: false
+    })
+  </script>
+{% endblock %}

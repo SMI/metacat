@@ -1,0 +1,12 @@
+[
+    {
+        "tag" : "_id",
+        "blockReason" : "MongoDB internal use.",
+        "modality": "all"
+    },
+    {
+        "tag" : "header",
+        "blockReason" : "SMI service internal use.",
+        "modality": "all"
+    }
+]

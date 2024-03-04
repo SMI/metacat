@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% set active_page = "tags" %}
+{% block links %}
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dataTables.bootstrap5.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/buttons.bootstrap5.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/jquery.dataTables.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/buttons.dataTables.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/fixedHeader.dataTables.min.css')}}">
+{% endblock %}
+{% block content %}
+  <div class="container-lg" style="margin: 30px;">
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI PACS Metadata Catalogue {% endblock %}</h1>
+    <h2>{{ modality }}</h2>
+    <table id="tags" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Tag</th>
+          <th>DICOM ID</th>
+          <th>Public</th>
+          <th>Promotion status</th>
+          <th>Description</th>
+          <th>Modalities</th>
+          <th>Level</th>
+          <th>Confidentiality profile</th>
+          {% if modality != "All Tags" %}
+          <th>Completeness</th>
+          {% endif %}
+          <th>Type</th>
+          <th>Value representation</th>
+          <th>Value multiplicity</th>
+          <th>Retired</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tag in tags %}
+          <tr>
+            <td>{{ tag.get('tag') }}</td>
+            <td>{{ tag.get('dicomID', 'Unknown') }}</td>
+            <td>{{ tag.get('public', 'Unknown') }}</td>
+            <td  data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ tag['promotionStatusDate'] }}">{{ tag.get('promotionStatus', 'Unknown') }}</td>
+            <td>{{ tag.get('blockReason', 'Unknown') if tag.get('blockReason', None) else tag.get('description', 'Unknown') }}</td>
+            <td>{{ tag.get('modalities') }}</td>
+            <td>{{ tag.get('informationEntity', 'Unkown') }}</td>
+            <td>{{ tag.get('basicProfile', 'Unknown') }}</td>
+            {% if modality != "All Tags" %}
+            <td  data-toggle="tooltip" data-placement="bottom" title="Last updated on {{ tag['tagQualityDateRaw'] }}">{{ tag.get('completenessRaw', 'Unknown') }}</td>
+            {% endif %}
+            <td>{{ tag.get('type', 'Unknown') }}</td>
+            <td>{{ tag.get('valueRepresentation', 'Unknown') }}</td>
+            <td>{{ tag.get('valueMultiplicity', 'Unknown') }}</td>
+            <td>{{ tag.get('retired', 'Unknown') }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Tag</th>
+          <th>DICOM ID</th>
+          <th>Public</th>
+          <th>Promotion status</th>
+          <th>Description</th>
+          <th>Modalities</th>
+          <th>Level</th>
+          <th>Confidentiality profile</th>
+          {% if modality != "All Tags" %}
+          <th>Completeness</th>
+          {% endif %}
+          <th>Type</th>
+          <th>Value representation</th>
+          <th>Value multiplicity</th>
+          <th>Retired</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.dataTables.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/dataTables.buttons.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/buttons.html5.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/dataTables.select.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/buttons.colVis.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/dataTables.fixedHeader.min.js')}}"></script>
+  <script>
+    $(document).ready(function () {
+      var table = $('#tags').DataTable({
+        dom: 'Bfrtip',
+        pageLength: 50,
+        scrollX: true,
+        orderCellsTop: true,
+        fixedHeader: true,
+        buttons: [
+          {
+            extend: 'csv',
+            exportOptions: {
+              columns: ':visible'
+            }
+          },
+          'colvis'
+        ],
+        select: true,
+        initComplete: function () {
+          $('.dt-button').removeClass('dt-button').addClass('btn btn-info');
+          this.api()
+            .columns([3, 7])
+            .every(function () {
+                let column = this;
+ 
+                // Create select element
+                let select = document.createElement('select');
+                select.add(new Option(''));
+                column.footer().replaceChildren(select);
+ 
+                // Apply listener for user change in value
+                select.addEventListener('change', function () {
+                    var val = DataTable.util.escapeRegex(select.value);
+ 
+                    column
+                        .search(val ? '^' + val + '$' : '', true, false)
+                        .draw();
+                });
+ 
+                // Add list of options
+                column
+                    .data()
+                    .unique()
+                    .sort()
+                    .each(function (d, j) {
+                        select.add(new Option(d));
+                    });
+            });
+        }
+      });
+    });
+  </script>
+{% endblock %}
