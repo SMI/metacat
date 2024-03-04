@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script type='text/javascript' src="{{url_for('static', filename='js/jquery-3.2.1.slim.min.js')}}"></script>
+    <script type='text/javascript' src="{{url_for('static', filename='js/popper.min.js')}}"></script>
     <script type='text/javascript' src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
     <title>{% block title %} {% endblock %}</title>
   </head>
@@ -36,11 +37,6 @@
               <a class="nav-link" id="linkReport" href="/api/report">General Report</a>
             </li>
           </ul>
-        </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" id="search" type="text" placeholder="Search" aria-label="Search">
-          </form>
         </div>
       </div>
     </nav>

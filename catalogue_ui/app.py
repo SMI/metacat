@@ -42,20 +42,26 @@ def argparser() -> argparse.Namespace:
 @app.route('/')
 def index() -> str:
     '''Main page showing modalities summary.'''
+    data = get_mods()
+
+    return render_template("index.html",
+                           modalities=data,
+                           calculate_percentage=funct.calculate_percentage)
+
+
+@cache.cached(timeout=500)
+def get_mods():
     conn = funct.get_db_connection(log)
     modalities = list(conn.search("modalities", {}, {
         "modality": 1, "promotionStatus": 1, "promotionStatusDate": 1,
         "totalNoImagesRaw": 1, "totalNoImagesStaging": 1, "totalNoImagesLive": 1
     }))
     blocked_mods = list(conn.search("modality_blocklist"))
+    conn.disconnect()
 
     modalities = funct.merge_lists(modalities, blocked_mods, "modality")
 
-    conn.disconnect()
-
-    return render_template("index.html",
-                           modalities=modalities,
-                           calculate_percentage=funct.calculate_percentage)
+    return modalities
 
 
 @app.route('/api/<modality>')
@@ -134,8 +140,6 @@ def labels() -> str:
     label_meta = list(conn.search("bodyparts"))
     conn.disconnect()
 
-    logging.info(label_meta[0])
-
     labels, data = funct.format_label_stats(label_meta[0]["stats"])
 
     return render_template("body.html", labels=labels, data=data, logs=label_meta)
@@ -144,6 +148,14 @@ def labels() -> str:
 @app.route('/api/report')
 def report() -> str:
     '''Report page.'''
+    tag_stats, monthly_counts = get_report()
+
+    return render_template("report.html", tag_stats=tag_stats,
+                           monthly_counts=monthly_counts)
+
+
+@cache.cached(timeout=500)
+def get_report():
     conn = funct.get_db_connection(log)
     modalities = list(conn.search("modalities", {}, {
         "modality": 1, "countsPerMonthRaw": 1, "countsPerMonthStaging": 1,
@@ -154,8 +166,7 @@ def report() -> str:
     tag_stats = funct.tag_stats(tags)
     monthly_counts = funct.monthly_counts(modalities, "Live")
 
-    return render_template("report.html", tag_stats=tag_stats,
-                           monthly_counts=monthly_counts)
+    return tag_stats, monthly_counts
 
 
 def main(args: argparse.Namespace) -> None:
