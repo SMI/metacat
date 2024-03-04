@@ -38,30 +38,30 @@ done > "$LOG" 2>&1 &&
 study_descr () {
   python3 tag_labelling.py -d smi -c StudyDescription -ta StudyTable -t data/terms.csv -m "CT,MR" -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1 &&
 
-  python3 plot.py -t "$OUTPUT"/StudyDescription_col_labelled_"$DATE".csv -c StudyDescriptionCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1
+  python3 plot.py -t "$OUTPUT"/StudyDescription_col_labelled_"$DATE".csv -c SeriesCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1
 
   if [ -f "$OUTPUT"/StudyDescription_col_unlabelled.csv ]; then
-    python3 plot.py -t "$OUTPUT"/StudyDescription_col_unlabelled_"$DATE".csv -c StudyDescriptionCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1
+    python3 plot.py -t "$OUTPUT"/StudyDescription_col_unlabelled_"$DATE".csv -c SeriesCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1
   fi
 }
 
 series_descr () {
   python3 tag_labelling.py -d smi -c SeriesDescription -ta SeriesTable -t data/terms.csv -m "CT,MR" -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1 &&
 
-  python3 plot.py -t "$OUTPUT"/SeriesDescription_col_labelled_"$DATE".csv -c SeriesDescriptionCount -b series -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1  &
+  python3 plot.py -t "$OUTPUT"/SeriesDescription_col_labelled_"$DATE".csv -c SeriesCount -b series -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1  &
 
   if [ -f "$OUTPUT"/SeriesDescription_unlabelled.csv ]; then
-    python3 plot.py -t "$OUTPUT"/SeriesDescription_col_unlabelled_"$DATE".csv -c SeriesDescriptionCount -b series -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1  &
+    python3 plot.py -t "$OUTPUT"/SeriesDescription_col_unlabelled_"$DATE".csv -c SeriesCount -b series -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1  &
   fi
 }
 
 body_part_examined () {
   python3 tag_labelling.py -d smi -c BodyPartExamined -ta SeriesTable -t data/terms.csv -m "CT,MR" -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1 &&
 
-  python plot.py -t "$OUTPUT"/BodyPartExamined_col_labelled_"$DATE".csv -c BodyPartExaminedCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1  &
+  python plot.py -t "$OUTPUT"/BodyPartExamined_col_labelled_"$DATE".csv -c SeriesCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1  &
 
   if [ -f "$OUTPUT"/BodyPartExamined_unlabelled.csv ]; then
-    python plot.py -t "$OUTPUT"/BodyPartExamined_col_unlabelled_"$DATE".csv -c BodyPartExaminedCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1
+    python plot.py -t "$OUTPUT"/BodyPartExamined_col_unlabelled_"$DATE".csv -c SeriesCount -b studies -o "$OUTPUT" -l "$LOG_PATH" > "$LOG" 2>&1
   fi
 }
 
