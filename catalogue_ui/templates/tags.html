@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
   <div class="container-lg" style="margin: 30px;">
-    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI PACS Metadata Catalogue {% endblock %}</h1>
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI Metadata Catalogue {% endblock %}</h1>
     <h2>{{ modality }}</h2>
     <table id="tags" class="table table-striped">
       <thead>
@@ -102,7 +102,7 @@
         initComplete: function () {
           $('.dt-button').removeClass('dt-button').addClass('btn btn-info');
           this.api()
-            .columns([3, 7])
+            .columns([2, 3, 7])
             .every(function () {
                 let column = this;
  

@@ -22,16 +22,16 @@ python3 mysql_counts.py -d smi -s Live -l logs/ &&
 # Set promotion status to available if in the live database
 python3 promotion_status.py -d smi -s available -l logs/ &&
 # Analyse tag quality for public tags in the raw database
-python3 tag_quality.py -d dicom -p public -l logs/
+python3 tag_quality.py -d dicom -p public -l logs/ &&
 # Download DICOM standard metadata from Innolitics
-./scripts/dicom_standard_download.sh data
+#./scripts/dicom_standard_download.sh data
 # Import DICOM standard metadata
-python3 dicom_standard_import.py -f data/dicom_standard -l logs/
+python3 dicom_standard_import.py -f data/dicom_standard -l logs/ &&
 # Run body part labelling
 cd /home/metacat/test
 ./body_part_labelling.sh /tmp yes &&
 cd /home/metacat/metadata_studies/body_part_labelling
-python3 generate_stats.py -v 1 -o /tmp -l logs/
+python3 generate_stats.py -v 1 -o /tmp -l logs/ &&
 # Start catalogue UI
 cd /home/metacat/catalogue_ui
 python3 app.py -e dev

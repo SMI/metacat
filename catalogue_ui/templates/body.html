@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
   <div class="container" style="margin-bottom: 30px;">
-    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI PACS Metadata Catalogue {% endblock %}</h1>
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI Metadata Catalogue {% endblock %}</h1>
     <h3>Body part labelling stats</h3>
     <div>
       <h4 style="margin-top: 30px; margin-bottom: 30px;">Labelling coverage by modality</h4>
@@ -20,7 +20,7 @@
             <th>Labelling date</th>
             <th>Dictionary version</th>
             <th>Total labelled series (%)</th>
-            <th>Total validated series (%)</th>
+            <th>Total valid series* (%)</th>
           </tr>
         </thead>
         <tbody>
@@ -34,6 +34,7 @@
           {% endfor %}
         </tbody>
       </table>
+      <p>* Manual validation of StudyDescription against applied label(s) as a % of the total number of series.</p>
     </div>
   </div>
 {% endblock %}

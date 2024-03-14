@@ -22,7 +22,7 @@
     "Manufacturer": "LO/SIEMENS|Philips Medical Systems|None|",
     "InstitutionName": "LO",
     "ReferringPhysicianName": "PN",
-    "StudyDescription": "LO/thor abd pel|mandible trauma|CT^lung^scan|None|",
+    "StudyDescription": "LO/120S ABDO|Hip scan|LARYNX|R.ELBOW|L.TIBIA|lumbar vertebrae L1-L5|mandible trauma|fullbodyscan|CT^lung^scan|None|",
     "SeriesDescription": "LO/thor abd pel|mandible trauma|CT^lung^scan|None|",
     "BodyPartExamined": "CS/HEAD|CHEST|ABDOMEN|PELVIS|None|",
     "ReferencedSeriesSequence": [

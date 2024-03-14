@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% set active_page = "codes" %}
+{% block links %}
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/jquery.dataTables.min.css')}}">
+{% endblock %}
+{% block content %}
+  <div class="container" style="margin-bottom: 30px;">
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">{% block title %} SMI Metadata Catalogue {% endblock %}</h1>
+    <h3>Codes</h3>
+    <div>
+      <h4 style="margin-top: 30px; margin-bottom: 30px;">Confidentiality profiles</h4>
+      <table id="logs" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Definition</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for code in codes %}
+            <tr>
+              <td>{{ code.get('name') }}</td>
+              <td>{{ code.get('description') }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script>
+    var table = $('#logs').DataTable({
+      info: false,
+      ordering: false,
+      paging: false,
+      searching: false
+    })
+  </script>
+{% endblock %}

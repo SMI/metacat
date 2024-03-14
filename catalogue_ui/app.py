@@ -117,13 +117,12 @@ def get_tags(modality):
                                     {"tags": 1}
         ))[0]["tags"]
         tag_meta = list(conn.search("tags",
-                                    {"modalities": {"$in": [modality]},
-                                    "promotionStatus": {"$ne": "blocked"}}
+                                    {"modalities": {"$in": [modality]}}
         ))
 
         tag_meta = funct.merge_lists(tag_meta, mod_meta, "tag")
     else:
-        tag_meta = list(conn.search("tags", {"promotionStatus": {"$ne": "blocked"}}))
+        tag_meta = list(conn.search("tags"))
 
     conn.disconnect()
 
@@ -143,6 +142,26 @@ def labels() -> str:
     labels, data = funct.format_label_stats(label_meta[0]["stats"])
 
     return render_template("body.html", labels=labels, data=data, logs=label_meta)
+
+
+@app.route('/api/codes')
+def codes() -> str:
+    '''Codes page.'''
+    codes_list = [
+        {"name": "D", "description": "Replace with a non-zero length value that may be a dummy value and consistent with the VR."},
+        {"name": "Z", "description": "Replace with a zero length value, or a non-zero length value that may be a dummy value and consistent with the VR."},
+        {"name": "X", "description": "Remove."},
+        {"name": "K", "description": "Keep (unchanged for non-sequence attributes, cleaned for sequences)."},
+        {"name": "C", "description": "Clean, that is replace with values of similar meaning known not to contain identifying information and consistent with the VR."},
+        {"name": "U", "description": "Replace with a non-zero length UID that is internally consistent within a set of Instances."},
+        {"name": "Z/D", "description": "Z unless D is required to maintain IOD conformance (Type 2 versus Type 1)."},
+        {"name": "X/Z", "description": "X unless Z is required to maintain IOD conformance (Type 3 versus Type 2)."},
+        {"name": "X/D", "description": "X unless D is required to maintain IOD conformance (Type 3 versus Type 1)."},
+        {"name": "X/Z/D", "description": "X unless Z or D is required to maintain IOD conformance (Type 3 versus Type 2 versus Type 1)."},
+        {"name": "X/Z/U*", "description": "X unless Z or replacement of contained instance UIDs (U) is required to maintain IOD conformance (Type 3 versus Type 2 versus Type 1 sequences containing UID references)."}
+    ]
+
+    return render_template("codes.html", codes=codes_list)
 
 
 @app.route('/api/report')
