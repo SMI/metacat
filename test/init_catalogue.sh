@@ -24,7 +24,7 @@ python3 promotion_status.py -d smi -s available -l logs/ &&
 # Analyse tag quality for public tags in the raw database
 python3 tag_quality.py -d dicom -p public -l logs/ &&
 # Download DICOM standard metadata from Innolitics
-#./scripts/dicom_standard_download.sh data
+./scripts/dicom_standard_download.sh data
 # Import DICOM standard metadata
 python3 dicom_standard_import.py -f data/dicom_standard -l logs/ &&
 # Run body part labelling
