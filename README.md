@@ -66,7 +66,7 @@ Similarly for the MariaDB container:
 <MYSQLPASS>
 ```
 
-To stop containers, just press CTRL+C and run the following command to clean up:
+To stop containers, press CTRL+C and run the following command to clean up:
 
 ```shell
 $ docker-compose -f ./test/docker-compose.yml down
