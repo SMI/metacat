@@ -58,10 +58,10 @@ def main(args: argparse.Namespace) -> None:
     tables = [table[0] for table in tables]
 
     if not tables or table_name not in tables:
-        query = (f"CREATE TABLE IF NOT EXISTS {table_name} ("
-                 "StudyDescription VARCHAR(255) BINARY, "
-                 "SeriesDescription VARCHAR(255) BINARY, "
-                 "BodyPartExamined VARCHAR(255) BINARY, "
+        query = (f"CREATE TABLE {table_name} ("
+                 "StudyDescription VARCHAR(64), "
+                 "SeriesDescription VARCHAR(255), "
+                 "BodyPartExamined VARCHAR(50), "
                  "head FLOAT, "
                  "neck FLOAT, "
                  "chest FLOAT, "
@@ -71,8 +71,7 @@ def main(args: argparse.Namespace) -> None:
                  "lower_limb FLOAT, "
                  "spine FLOAT, "
                  "whole_body FLOAT, "
-                 "CombinationCount INT, "
-                 "PRIMARY KEY (StudyDescription, SeriesDescription, BodyPartExamined)"
+                 "CombinationCount INT"
                  ");")
 
     mysql.execute_query(query)
@@ -99,7 +98,23 @@ def main(args: argparse.Namespace) -> None:
         pks = ["StudyDescription", "SeriesDescription", "BodyPartExamined"]
 
         for row in reader:
-            row_vals = [None if row[col] == "" and col not in pks else row[col].replace("\"", "'") for col in header]
+            row_vals = []
+
+            for col in header:
+                if col in pks and row[col] == "None":
+                    row[col] = ""
+
+                if col not in pks:
+                    if row[col] == "":
+                        row[col] = 0
+                    else:
+                        if "Count" in col:
+                            row[col] = int(row[col])
+                        else:
+                            row[col] = float(row[col])
+
+                row_vals.append(row[col])
+
             mysql.execute_query(query, tuple(row_vals))
 
 
