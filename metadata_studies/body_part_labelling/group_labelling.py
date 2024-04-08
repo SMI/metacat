@@ -123,55 +123,52 @@ def main(args: argparse.Namespace) -> None:
 
     # Groups: [{"StudyDescription": "", "SeriesDescription": "", "BodyPartExamined": "", "CombinationCount": #}]
     for group in groups:
-        # If the StudyDescription exists
-        if group.get("StudyDescription", None):
-            if group["StudyDescription"] in labelled_studies:
-                group_copy = group.copy()
+        # If the StudyDescription exists and has been labelled
+        if group.get("StudyDescription", None) and group["StudyDescription"] in labelled_studies:
+            group_copy = group.copy()
 
-                for label in labelled_studies[group["StudyDescription"]].split("/"):
-                    # For each label applied to StudyDescription, confidence +1
-                    confidence = 1
-                    # If SeriesDescription also has this label, confidence +1
-                    if labelled_series.get(group["SeriesDescription"], None) and label in labelled_series.get(group["SeriesDescription"], None):
-                        confidence += 1
-                    # If BodyPartExamined also has this label, confidence +1
-                    if labelled_bpx.get(group["BodyPartExamined"], None) and label in labelled_bpx.get(group["BodyPartExamined"], None):
-                        confidence += 1
-                    # Apply StudyDescription labels to the group
-                    group_copy[label] = "{:.2f}".format((confidence * 100) / 3)
+            for label in labelled_studies[group["StudyDescription"]].split("/"):
+                # For each label applied to StudyDescription, confidence +1
+                confidence = 1
+                # If SeriesDescription also has this label, confidence +1
+                if labelled_series.get(group["SeriesDescription"], None) and label in labelled_series.get(group["SeriesDescription"], None):
+                    confidence += 1
+                # If BodyPartExamined also has this label, confidence +1
+                if labelled_bpx.get(group["BodyPartExamined"], None) and label in labelled_bpx.get(group["BodyPartExamined"], None):
+                    confidence += 1
+                # Apply StudyDescription labels to the group
+                group_copy[label] = "{:.2f}".format((confidence * 100) / 3)
 
-                # Add labelled group to labelled list
-                labelled_groups.append(group_copy)
-        # If the StudyDescription does not exist but SeriesDescription does
-        elif group.get("SeriesDescription", None):
-            if group["SeriesDescription"] in labelled_series:
-                group_copy = group.copy()
+            # Add labelled group to labelled list
+            labelled_groups.append(group_copy)
+        # If the StudyDescription does not exist and cannot be labelled
+        elif group.get("SeriesDescription", None) and group["SeriesDescription"] in labelled_series:
+            group_copy = group.copy()
 
-                for label in labelled_series[group["SeriesDescription"]].split("/"):
-                    # For each label applied to SeriesDescription, confidence +1
-                    confidence = 1
-                    # If BodyPartExamined also has this label, confidence +1
-                    if labelled_bpx.get(group["BodyPartExamined"], None) and label in labelled_bpx.get(group["BodyPartExamined"], None):
-                        confidence += 1
-                    # Apply SeriesDescription labels to the group
-                    group_copy[label] = "{:.2f}".format((confidence * 100) / 3)
+            for label in labelled_series[group["SeriesDescription"]].split("/"):
+                # For each label applied to SeriesDescription, confidence +1
+                confidence = 1
+                # If BodyPartExamined also has this label, confidence +1
+                if labelled_bpx.get(group["BodyPartExamined"], None) and label in labelled_bpx.get(group["BodyPartExamined"], None):
+                    confidence += 1
+                # Apply SeriesDescription labels to the group
+                group_copy[label] = "{:.2f}".format((confidence * 100) / 3)
 
-                # Add labelled group to labelled list
-                labelled_groups.append(group_copy)
-        # If BodyPartExamined is the only one that exists
-        elif group.get("BodyPartExamined", None):
-            if group["BodyPartExamined"] in labelled_bpx:
-                group_copy = group.copy()
+            # Add labelled group to labelled list
+            labelled_groups.append(group_copy)
+        # If BodyPartExamined is the only one that exists and has been labelled
+        elif group.get("BodyPartExamined", None) and group["BodyPartExamined"] in labelled_bpx:
+            group_copy = group.copy()
 
-                for label in labelled_bpx[group["BodyPartExamined"]].split("/"):
-                    # For each label applied to BodyPartExamined, confidence +1
-                    confidence = 1
-                    # Apply BodyPartExamined labels to the group
-                    group_copy[label] = "{:.2f}".format((confidence * 100) / 3)
+            for label in labelled_bpx[group["BodyPartExamined"]].split("/"):
+                # For each label applied to BodyPartExamined, confidence +1
+                confidence = 1
+                # Apply BodyPartExamined labels to the group
+                group_copy[label] = "{:.2f}".format((confidence * 100) / 3)
 
-                # Add labelled group to labelled list
-                labelled_groups.append(group_copy)
-        # If none of the columns have a value, add the group to unlabelled list
+            # Add labelled group to labelled list
+            labelled_groups.append(group_copy)
+        # If none of the columns exist nor can be labelled
         else:
             unlabelled_groups.append(group)
 
