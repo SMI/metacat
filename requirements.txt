@@ -3,7 +3,7 @@ Flask==2.2.5
 Flask-Caching==2.1.0
 Jinja2==3.0.3
 jinjasql==0.1.8
-Werkzeug==2.3.8
+Werkzeug==3.0.3
 mysql-connector-python==8.1.0
 pymongo==4.6.2
 PyYAML==6.0.1
